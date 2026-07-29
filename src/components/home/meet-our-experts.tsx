@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Stethoscope, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -59,10 +59,10 @@ const doctors = [
 function DoctorCard({ doctor, index }: { doctor: (typeof doctors)[number]; index: number }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.08 }}
+      transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
       className="shrink-0 snap-start w-[85%] sm:w-[calc(50%-12px)] lg:w-[calc(25%-18px)]"
     >
       <div className="flex flex-col h-full items-center text-center rounded-3xl bg-white border border-border/60 hover:border-accent/30 p-8 shadow-[0_2px_12px_rgba(28,32,36,0.05)] hover:shadow-[0_20px_40px_rgba(28,32,36,0.12)] hover:-translate-y-1.5 transition-all duration-300">
@@ -70,6 +70,7 @@ function DoctorCard({ doctor, index }: { doctor: (typeof doctors)[number]; index
           <img
             src={doctor.image}
             alt={`Portrait of ${doctor.name}`}
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         </div>
@@ -97,13 +98,38 @@ export default function MeetOurExperts() {
     el.scrollBy({ left: direction * el.clientWidth * 0.9, behavior: "smooth" });
   };
 
+  // Chromium converts vertical wheel deltas into horizontal scroll on
+  // overflow-x-only containers, swallowing the event before it reaches the
+  // page. React's onWheel is passive by default, so preventDefault must go
+  // through a native, non-passive listener instead.
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        // behavior: "instant" — the page's CSS `scroll-behavior: smooth` only
+        // applies to programmatic scrolls, so without this the forwarded
+        // scroll would visibly lag behind native wheel scrolling elsewhere.
+        window.scrollBy({ top: e.deltaY, left: 0, behavior: "instant" });
+      }
+      // Horizontal-dominant deltas (shift+wheel, trackpad swipe) are left
+      // alone so the carousel's native horizontal scroll still works.
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, []);
+
   return (
-    <section className="py-24 lg:py-36 bg-surface">
+    <section className="py-24 md:py-28 lg:py-36 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-16"
         >
           <h2 className="font-display text-4xl sm:text-5xl text-primary-dark leading-tight">

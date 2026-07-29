@@ -39,12 +39,13 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-24 lg:py-36 bg-background">
+    <section className="py-24 md:py-28 lg:py-36 bg-background">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-12"
         >
           <span className="text-xs font-semibold tracking-[0.2em] uppercase text-secondary mb-4 block">
@@ -62,7 +63,7 @@ export default function FAQ() {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: i * 0.05 }}
+              transition={{ duration: 0.5, delay: i * 0.05, ease: "easeOut" }}
               className="rounded-xl bg-white border border-border/60 overflow-hidden"
             >
               <button

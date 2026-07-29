@@ -23,13 +23,14 @@ const topics = [
 
 export default function WellnessKnowledge() {
   return (
-    <section className="py-24 lg:py-36 bg-surface">
+    <section className="py-24 md:py-28 lg:py-36 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-20"
         >
           <span className="text-xs font-semibold tracking-[0.2em] uppercase text-secondary mb-4 block">
@@ -47,16 +48,17 @@ export default function WellnessKnowledge() {
           {topics.map((topic, i) => (
             <motion.div
               key={topic.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
               className="group rounded-2xl overflow-hidden bg-white border border-border/40 hover:shadow-lg transition-all duration-300"
             >
               <div className="aspect-[4/3] relative overflow-hidden">
                 <img
                   src={topic.image}
                   alt={topic.title}
+                  loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
@@ -78,6 +80,7 @@ export default function WellnessKnowledge() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="mt-16 text-center"
         >
           <div className="inline-flex flex-wrap items-center justify-center gap-6 text-sm text-muted">

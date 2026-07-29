@@ -33,13 +33,13 @@ const features = [
 
 export default function WhyChooseSimplyMen() {
   return (
-    <section className="py-24 bg-background">
+    <section className="py-24 md:py-28 lg:py-36 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="rounded-[36px] bg-white border border-border/60 shadow-[0_2px_12px_rgba(28,32,36,0.05)] px-6 py-8 sm:px-10 sm:py-12 lg:px-16 lg:py-16"
         >
           <div className="text-center mb-16">
@@ -60,7 +60,7 @@ export default function WhyChooseSimplyMen() {
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
                   className="group flex flex-col items-center text-center hover:-translate-y-1 transition-transform duration-300"
                 >
                   <span className="flex items-center justify-center h-[72px] w-[72px] rounded-full bg-teal-50 group-hover:bg-teal-100 transition-colors duration-300 mb-5">

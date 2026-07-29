@@ -51,12 +51,13 @@ const badgeIcons = [BadgeCheck, Calendar, CircleCheck];
 
 export default function TreatmentPrograms() {
   return (
-    <section className="py-24 lg:py-32 bg-background">
+    <section className="py-24 md:py-28 lg:py-36 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="font-display text-4xl sm:text-5xl text-primary-dark leading-tight">
             Choose Your Treatment Program
@@ -70,6 +71,7 @@ export default function TreatmentPrograms() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"
         >
           {programs.map((p) => (
@@ -81,6 +83,7 @@ export default function TreatmentPrograms() {
                 <img
                   src={p.image}
                   alt={p.name}
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               </div>

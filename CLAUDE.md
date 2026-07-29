@@ -8,7 +8,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 # SimplyMen — Project Context (Single Source of Truth)
 
-> **Last updated:** 21 July 2026
+> **Last updated:** 29 July 2026
 > **Domain:** simplymen.care
 > **Purpose:** Male sexual health e-commerce + telehealth platform (kit-based model)
 > **Dev server:** `http://localhost:3000`
@@ -198,28 +198,28 @@ simplymen/
 
 ## 7. Landing Page Components (in order)
 
-> Redesigned July 2026 against "Homepage V2 — Kits First" + a component design system PDF. See §15 for the full changelog.
+> Redesigned July 2026 against "Homepage V2 — Kits First" + a component design system PDF (see §15). Reordered again 29 July 2026 into a "healthcare decision journey" narrative — process before conditions/programs — with one section merge. See §15 for the full changelog.
 
 | # | Component | File | Description |
 |---|-----------|------|-------------|
 | 1 | Navbar | `layout/navbar.tsx` | Logo + links (Home, Assessment, Blogs, Kits) + Login/UserButton |
-| 2 | Hero | `landing/hero.tsx` | Pure image carousel (`/hero/hero1-3.png`). Heading/subtitle/CTA are baked into the exported images — component only handles slides, fade transition, arrows, dots |
-| 3 | IMA Banner | `landing/ima-banner.tsx` | Scrolling marquee trust banner |
-| 4 | Conditions | `landing/conditions.tsx` | Single row of 5 condition cards (ED, PE, Low Libido, Hormonal, Infertility) — Lucide icons, teal circle badges |
-| 5 | Not Sure CTA | `home/not-sure-cta.tsx` | "Your Personalized Treatment Plan Starts Here" — 4-step process row + gold CTA + trust badges, warm cream layered background |
+| 2 | Hero | `landing/hero.tsx` | Image carousel with code-rendered heading/subtitle/CTA/trust-indicators overlaid on the left negative space of each photo (rebuilt 29 July 2026 — see §15; final photography, no baked-in text) |
+| 3 | IMA Banner (Trust) | `landing/ima-banner.tsx` | Scrolling marquee trust banner |
+| 4 | How It Works | `landing/how-it-works.tsx` | Merged 29 July 2026 with the former "Your Personalized Treatment Plan Starts Here" section (`home/not-sure-cta.tsx`, now deleted) — heading, "Join 50,000+ men..." line, 4 illustrated step cards (`/How it works/step1-4.svg`), gold CTA, trust-indicator row, on the layered warm-cream decorative background |
+| 5 | Conditions We Treat | `landing/conditions.tsx` | Single row of 5 condition cards (ED, PE, Low Libido, Hormonal, Infertility) — Lucide icons, teal circle badges |
 | 6 | Treatment Programs | `home/treatment-programs.tsx` | 5 program cards (teal theme), "Start Free Assessment" deep-links to `/assessment?concern=X`, "Learn about this program" → placeholder `/programs/{slug}` |
-| 7 | Program Showcase | `home/program-showcase.tsx` | 4 alternating image/benefit rows (ED, PE, Hormonal, Libido), data-driven |
-| 8 | How It Works | `landing/how-it-works.tsx` | 4-card grid (Take Assessment / Doctor Review / Personalized Plan / Discreet Delivery), real branded images from `/How it works/step1-4.svg` |
-| 9 | Why Better | `home/why-better.tsx` | "Why Our Treatment Programs Work Better" — spider/comparison diagram (Traditional vs Simply Men) converging on a center circle, animated SVG connector lines |
-| 10 | **Routine Graph** | `landing/routine-graph.tsx` | Rebuilt July 2026 — "Simplify Your Health Routine", 3 stat cards with animated progress rings (was: line-graph "Routine Simplification" section) |
-| 11 | Meet Our Experts | `home/meet-our-experts.tsx` | Horizontally scrollable carousel, 7 doctors, snap-scroll + arrow nav |
+| 7 | Program Showcase (Program Details) | `home/program-showcase.tsx` | 4 alternating image/benefit rows (ED, PE, Hormonal, Libido), data-driven |
+| 8 | Why Better | `home/why-better.tsx` | "Why Our Treatment Programs Work Better" — spider/comparison diagram (Traditional vs Simply Men) converging on a center circle, animated SVG connector lines |
+| 9 | **Routine Graph** | `landing/routine-graph.tsx` | Redesigned again 29 July 2026 — "Simplify Your Health Routine" as ONE unified comparison dashboard, 3 columns (Products/Cost/Time) each showing a literal Traditional→SimplyMen visual transformation (icon-grid→single icon, coin-stack→smaller coin-stack, large clock→small clock) with count-up numbers; no percentage rings (was: progress-ring stat cards; before that, a Month 1→5 line graph) |
+| 10 | Meet Our Experts | `home/meet-our-experts.tsx` | Horizontally scrollable carousel, 7 doctors, snap-scroll + arrow nav |
+| 11 | Testimonials | `landing/testimonials.tsx` | Dark section with gold stats + quote cards |
 | 12 | Why Choose Simply Men | `home/why-choose-simplymen.tsx` | Single premium rounded container, 5-feature grid + trust pill |
-| 13 | Testimonials | `landing/testimonials.tsx` | Dark section with gold stats + quote cards |
-| 14 | Wellness Knowledge | `landing/wellness-knowledge.tsx` | 3 image cards (sleep/exercise/nutrition) |
-| 15 | FAQ | `landing/faq.tsx` | Accordion FAQ section |
-| 16 | Footer | `layout/footer.tsx` | Rebuilt July 2026 — warm off-white bg (`#F7F3EE`), 5-column layout (brand + Treatment Programs/Support/Legal/Company), phone/mail bottom row. Trust bar + dark theme removed |
+| 13 | FAQ | `landing/faq.tsx` | Accordion FAQ section |
+| 14 | Wellness Knowledge (Knowledge Hub) | `landing/wellness-knowledge.tsx` | 3 image cards (sleep/exercise/nutrition) |
+| 15 | Footer | `layout/footer.tsx` | Warm off-white bg (`#F7F3EE`), 5-column layout (brand + Treatment Programs/Support/Legal/Company), phone/mail bottom row. Trust bar + dark theme removed |
 
-> **Removed:** `landing/why-choose-us.tsx` ("Healthcare designed around you" — lifestyle image + floating bottle + 6 features) deleted outright, July 2026. Superseded by Why Better + Why Choose Simply Men.
+> **Removed:** `landing/why-choose-us.tsx` (July 2026, superseded by Why Better + Why Choose Simply Men) and `home/not-sure-cta.tsx` (29 July 2026, merged into `landing/how-it-works.tsx` — see §15).
+> **Previous order (superseded 29 July 2026):** Hero → IMA Banner → Conditions → Not Sure CTA → Treatment Programs → Program Showcase → How It Works → Why Better → Routine Graph → Meet Our Experts → Why Choose Simply Men → Testimonials → Wellness Knowledge → FAQ → Footer.
 
 ---
 
@@ -271,7 +271,7 @@ simplymen/
 
 | Folder | Contents | Used In |
 |--------|----------|---------|
-| `public/hero/` | `hero1.png`, `hero2.png`, `hero3.png` — final pre-designed banners, heading/CTA baked in | `landing/hero.tsx` |
+| `public/hero/` | `hero1.png`, `hero2.png`, `hero3.png` — final production photography, replaced 29 July 2026. Photography only — heading/subtitle/CTA/trust-indicators are rendered in code, overlaid on each photo's left negative space, not baked into the image | `landing/hero.tsx` |
 | `public/icons/` | `ED.svg`, `PE.svg`, `lowlibido.svg`, `hormonalimbalance.png`, `infertility.png` | `landing/conditions.tsx` (superseded by Lucide icons per-condition, kept on disk) |
 | `public/docs/` | 7 doctor portraits (filenames are informal, e.g. `vk aggarwal.jpeg` for Prof. Dr. Vishnu Agrawal — verify mapping if a new doctor photo is added) | `home/meet-our-experts.tsx` |
 | `public/programs/` | `confidence.svg`, `performance.svg`, `hormonal.png`, `libido.svg` | `home/program-showcase.tsx` |
@@ -295,27 +295,33 @@ simplymen/
 
 ## 11. Feature Status
 
+> Corrected and expanded 29 July 2026 against a full-codebase audit (server actions, dashboards, checkout, cart) — several rows below were previously overstated as "Complete." See §18 for full detail and file:line citations.
+
 | Feature | Status | Notes |
 |---------|--------|-------|
-| Landing page (16 sections, redesigned to Homepage V2) | ✅ Complete | Framer Motion, real images. See §7 for full section list |
-| Hero image optimization | ⚠️ Temporary | `unoptimized` prop set on Hero's `<Image>` to bypass Next's image-optimizer cache during active asset iteration — **remove once hero images are finalized** so optimization re-enables for production |
-| Assessment (IIEF-5 / PEDT / multi-condition) | ✅ Complete | Saves to Supabase |
+| Landing page (15 sections, reordered into a decision-journey narrative 29 July 2026) | ✅ Complete | Framer Motion, real images, responsive-audited across desktop/tablet/mobile. See §7 for full section list |
+| Hero image optimization | ✅ Complete | New final photography in place 29 July 2026; `unoptimized` prop removed, Next.js image optimization active |
+| Assessment (multi-condition, 5 conditions × 12 questions) | ✅ Complete | Real hand-authored scoring logic in `lib/data/questionnaires.ts`; "inspired by" IIEF-5/PEDT per its own disclaimer text, not the literal licensed instruments. Saves to Supabase (`assessment_results`), errors swallowed silently (`results/page.tsx` — fire-and-forget) |
 | Results → Single kit recommendation | ✅ Complete | Shows kit products, tags, features |
 | **Kits page** (replaces old products catalog) | ✅ Complete | 3-column comparison with real images |
 | Kit detail `[slug]` page | ✅ Complete | Real product images, tabs |
-| Cart | ✅ Complete | Bundle view, discount field |
-| Checkout | ✅ Complete | Country codes, states, creates order |
-| Clerk auth | ✅ Complete | Google + Email |
-| Orders page | ✅ Complete | Expandable cards |
-| Admin dashboard | ✅ Complete | Stats + orders + tracking |
-| Supabase REST | ✅ Complete | All server actions |
-| **Routine Graph** (landing) | ✅ Complete | Animated SVG, Month 1→5 simplification |
+| Cart | ⚠️ Partial | Zustand store has full CRUD, but the UI only renders a **read-only bundle list** — no remove/quantity controls wired up. Discount-code input is a **non-functional placeholder** (no `onClick`). Not persisted — lost on refresh |
+| Checkout | ⚠️ Partial | Order creation is real (writes to Supabase `orders`+`order_items`); **payment is fully simulated** (`setTimeout` 1500ms, no Razorpay SDK, no dependency installed). If order-creation fails, checkout **still proceeds to the success screen** (error only `console.warn`'d). Success screen shows a **fabricated order ID** unrelated to the real DB id |
+| Clerk auth | ✅ Complete | Google + Email, thin wrapper around Clerk's hosted `<SignIn/>`/`<SignUp/>` — no custom forgot-password/email-verification UI (fully delegated to Clerk) |
+| Orders page | ✅ Complete | Expandable cards, real Supabase data |
+| Admin dashboard | ⚠️ Partial | Stats + searchable/paginated orders table + live status/tracking updates are real. **No user/doctor/product management UI** — promoting a user to ADMIN or DOCTOR requires editing the DB row or the hardcoded `ADMIN_EMAILS`/`DOCTOR_EMAILS` arrays in `actions/admin.ts` directly |
+| **Doctor dashboard** | ⚠️ Mostly stub | Orders list is real (reuses admin's `getAllOrders`). **"Call status" and doctor notes are localStorage-only** (`simplymens_doctor_call_status`) — never touch Supabase, not shared across devices/sessions, lost on cache clear. **No prescription-writing or approval-workflow feature exists at all** |
+| Supabase REST | ✅ Complete | All server actions (`admin.ts`/`assessments.ts`/`orders.ts`) hit Supabase for real, no mocked logic |
+| **Routine Graph** (landing) | ✅ Complete | Unified comparison dashboard (Products/Cost/Time), count-up numbers, no percentage rings — redesigned 29 July 2026 |
 | **Kit product images** | ✅ Complete | 3 real photos wired in |
 | Blogs | ✅ Routing ready | Listing + [slug] exists |
-| Clerk webhook (user sync) | 🔲 Not deployed | Code ready, needs CLERK_WEBHOOK_SECRET |
-| Razorpay payment | 🔲 Simulated | Uses setTimeout, needs real keys |
-| Legal pages | 🔲 Not started | Privacy, Terms, Refund (footer → "#") |
-| Email notifications | 🔲 Not started | Order confirmation, shipping |
+| Clerk webhook (user sync) | 🔲 Not deployed | Code is real and complete — svix signature verification, upserts `users` on `user.created`/`updated`, deletes on `user.deleted`, auto-promotes hardcoded admin email — just needs `CLERK_WEBHOOK_SECRET` configured in production |
+| Razorpay payment | 🔲 Simulated | Confirmed via audit: zero `razorpay` dependency in `package.json`, zero SDK calls anywhere |
+| Legal pages | 🔲 Not started | `/privacy`, `/terms`, `/refund-policy`, `/shipping-policy`, `/medical-disclaimer`, `/help`, `/contact`, `/about` — none exist, all footer-linked, all 404 |
+| Email notifications | 🔲 Not started | Zero email-sending code anywhere (`sendEmail`/`nodemailer`/`resend`/`sendgrid`/`smtp` all grep to zero hits, no email SDK dependency). Checkout's "we'll send a confirmation email" copy is UI text only — no email is ever sent |
+| SEO — sitemap/robots | 🔲 Not started | No `sitemap.ts`/`.xml` or `robots.ts`/`.txt` anywhere. On-page metadata (title/description/OG) in `layout.tsx` is real; no `twitter:` card metadata |
+| Analytics | 🔲 Not started | Zero analytics code (no GA/Vercel Analytics/PostHog/Mixpanel) |
+| Security headers | 🔲 Not started | `next.config.ts` only sets `images.remotePatterns` — no CSP, `X-Frame-Options`, HSTS, or rate limiting anywhere |
 | Deployment (Vercel) | 🔲 Not started | — |
 
 ---
@@ -468,3 +474,100 @@ UI-only redesign against "Homepage V2 — Kits First" + a Component Design Syste
 - **Added Routine Graph**: New landing section showing cost/complexity reduction over 5 months
 - **Added kit images**: `essential_wellness.png`, `confidence_plus.png`, `complete_mens_health.png`
 - **Navbar**: "Products" → "Kits"
+
+---
+
+## 17. Recent Changes (July 29, 2026) — Homepage Narrative Reorder, Hero Rebuild, Responsive QA
+
+UX-only pass: reorder homepage into a decision-journey narrative, merge one section, rebuild Hero against final photography, and perform a full responsive QA + docs sync. No backend/business logic touched.
+
+- **Homepage reordered** (§7): Hero → IMA Banner (Trust) → How It Works (merged) → Conditions We Treat → Treatment Programs → Program Showcase (Program Details) → Why Better → Routine Graph → Meet Our Experts → Testimonials → Why Choose Simply Men → FAQ → Wellness Knowledge → Footer. Rationale: answer "what happens if I click Start Free Assessment" before "what do you treat" / "what will I receive." No section's internal layout changed by the reorder itself.
+- **`home/not-sure-cta.tsx` merged into `landing/how-it-works.tsx`, then deleted** — both sections communicated the same assessment→doctor→plan→delivery message back-to-back. Kept: NotSureCTA's decorative layered background, gold CTA, trust-indicator row. Dropped: NotSureCTA's small icon-circle step row (redundant next to How It Works' illustrated step cards) and How It Works' old "Learn more about our clinical standards" link.
+- **Hero rebuilt against final photography** (`public/hero/hero1-3.png` replaced with plain editorial photos, no baked-in text): heading/subtitle/CTA/trust-indicators now render in code over each photo's left negative space. New copy: Hero 1 "Restore Confidence. / Rediscover Intimacy." (ED/performance/wellness), Hero 2 "Stronger Erections. / Lasting Performance." (ED/PE/intimacy), Hero 3 "Private Care. / Personalized Results." (doctor-led telehealth experience — no longer a specific-condition message). One subtle left-side gradient only (`black/55→transparent`), no full-image tint/darken/blur. `unoptimized` prop removed from Hero's `<Image>` (see §11).
+- **Routine Graph redesigned again**: replaced percentage-ring stat cards with ONE unified comparison dashboard, 3 columns (Products Used / Monthly Cost / Time Per Day), each a literal Traditional→SimplyMen visual transformation (icon grid→single icon, coin stack→smaller coin stack, large clock→small clock) with count-up numbers on scroll-into-view. No rings/donuts/gauges anywhere.
+- **Full responsive QA pass** across Hero + all 14 other homepage sections, real-browser-verified (desktop 1920 down to mobile 320px) via Chrome automation — since OS-level window resize doesn't affect viewport in this environment, verification used a same-origin iframe at fixed widths as a substitute for device emulation. Found and fixed 3 real Hero bugs:
+  - Heading wrapped to 4 lines at ≤360px width, clipping the top of the heading against the fixed-height hero section — fixed by reducing base heading size (`text-[26px]`, tighter `leading-[1.15]`) and switching the section from fixed `h-[420px]/h-[520px]` to `min-h-[480px]/min-h-[560px]` at mobile/tablet (lg+ keeps the original fixed height).
+  - Trust-indicator row collided with the carousel dot indicators at ≤360px — fixed with tighter mobile vertical spacing (`mt-5`/`mt-6` vs `mt-8`) and reserved bottom padding (`pb-14` at mobile, `sm:pb-0`).
+  - `object-center` on the hero `<Image>` cropped the right-third subject out of frame on narrow/tall mobile viewports — fixed with a per-slide `focalPoint` (e.g. `"70% 38%"`) applied via inline `objectPosition`, tuned to each image's actual composition instead of one shared crop.
+  - Confirmed via `scrollWidth` check: no horizontal overflow anywhere on the page at 320px width.
+- **CTA consistency fix**: the merged How It Works CTA used hardcoded hex colors (`#C08A4B`/`#B2773E` background + inline JS hover) left over from the old NotSureCTA code — replaced with the standard `bg-accent hover:bg-accent/90` token classes used by Hero/Program Showcase/Why Better. Noted but **not changed** (documented, intentional, out of scope): Treatment Programs cards use `bg-teal-600` for their CTA instead of gold, and CTA padding/size/icon presence still varies by section context (compact dark strips vs full section endings) — flagging for awareness, not a bug.
+- **Performance**: added `loading="lazy"` to the plain `<img>` tags in `home/program-showcase.tsx`, `home/treatment-programs.tsx`, `home/meet-our-experts.tsx`, `landing/wellness-knowledge.tsx`, and `landing/how-it-works.tsx` (step illustrations). Not changed (flagged as a future opportunity, not fixed — would be a larger, riskier refactor): most of these still use plain `<img>` instead of `next/image`, so they don't get automatic responsive `srcset`/optimization the way Hero does.
+- **Scroll UX refinement** (same day, follow-up): standardized vertical section padding to `py-24 md:py-28 lg:py-36` across all 11 story sections (fixed 3 real outliers — Treatment Programs and Routine Graph were `py-24 lg:py-32`; Why Choose Simply Men had no `lg:` step at all). Standardized every viewport-triggered entrance animation to `transition={{duration: 0.6, ease: "easeOut"}}` (many had no explicit transition before) and normalized `initial y` offsets to `20` (was a mix of 20/24/30). **`home/program-showcase.tsx` had zero entrance animation before this pass** — its 4 rows were plain `<div>`s; now wrapped in `motion.div` matching every other section. No scroll-snap/sticky/pinning added or removed (none existed); no reordering, no content changes.
+- **Meet Our Experts wheel-scroll fix**: the doctor carousel (`home/meet-our-experts.tsx`) was trapping vertical mouse-wheel scroll — not from any JS wheel listener, but from a native Chromium quirk where a horizontal-only-overflow container (`overflow-x-auto` + `snap-x`, no vertical overflow) auto-converts a vertical wheel delta into horizontal container scroll, consuming the event before it reaches the page. Fixed with a native (non-passive — React's `onWheel` is passive by default and can't `preventDefault()`) `wheel` listener added via `useEffect`: vertical-dominant deltas (`|deltaY| > |deltaX|`) call `preventDefault()` and forward the scroll to `window.scrollBy({top: e.deltaY, behavior: "instant"})` (explicit `instant` needed — the page's global `scroll-behavior: smooth` in `globals.css` only applies to programmatic scrolls and would otherwise make the forwarded scroll visibly lag behind native page scrolling elsewhere); horizontal-dominant deltas are left untouched so the carousel's existing horizontal wheel/trackpad/arrow/swipe behavior is unaffected. Verified via a dispatched `WheelEvent`: vertical delta now moves `window.scrollY` by the exact delta with `carousel.scrollLeft` staying at 0; horizontal-dominant path confirmed untouched by code inspection (real hardware trackpad testing wasn't reproducible via synthetic/untrusted DOM events in this environment — browsers don't run default scroll actions for untrusted events regardless of `preventDefault`, so that check must be re-verified with a real trackpad/mouse if in doubt).
+
+---
+
+## 18. Full Product Audit — Backend & Feature Reality Check (29 July 2026)
+
+> SimplyMen is a full-stack telehealth platform, not a homepage project — the homepage has gotten most of the iteration attention recently, but the product also includes real auth, a real database layer, two dashboards, and a checkout flow. This section is the source of truth for what's *actually* implemented under the hood, verified by reading the real source files (not by trusting prior doc claims). See also §11 Feature Status for the corrected summary table, and `PROJECT_STATUS.md` / `LAUNCH_CHECKLIST.md` in the repo root for the launch-facing view of the same facts.
+
+### Architecture
+
+Server Actions do almost all the backend work — there is **no REST/CRUD API layer**. Only 2 routes exist under `src/app/api/`:
+- `api/health/route.ts` — GET, runs 3 parallel Supabase `count` queries (users/products/orders), real.
+- `api/webhooks/clerk/route.ts` — real svix-verified Clerk webhook, upserts `users` on create/update, deletes on `user.deleted`, auto-promotes a hardcoded admin email. Rejects with 400/500 on bad signature or missing secret. No other webhook routes exist (no Razorpay webhook, since there's no real Razorpay integration).
+
+All other backend logic lives in `src/app/actions/`:
+- `admin.ts` — `getUserRole`, `getAllOrders`, `updateOrderStatus`, `updateTrackingNumber`, `getAdminStats`. Role checks (`requireAdmin`/`requireDoctorOrAdmin`) query the DB first, falling back to hardcoded `ADMIN_EMAILS = ["aryanadlakha002@gmail.com"]` and an **empty** `DOCTOR_EMAILS = []` (comment: "add doctor emails here" — nobody has, so the DOCTOR role is currently unreachable except by setting a DB row's role directly).
+- `assessments.ts` — `saveAssessmentResult`, `getUserAssessments`. Real Supabase reads/writes to `assessment_results`.
+- `orders.ts` — `createOrder`, `getUserOrders`. Real Supabase reads/writes to `orders`+`order_items`.
+
+### Authentication & route protection
+
+`src/middleware.ts` uses `clerkMiddleware` + `createRouteMatcher(["/checkout(.*)", "/orders(.*)", "/dashboard(.*)", "/admin(.*)", "/doctor(.*)"])`, calling `auth.protect()` only on matches. Two things worth knowing:
+- `/dashboard` is protected but **no `/dashboard` route exists anywhere in `src/app`** — a dead matcher entry, harmless.
+- **Role gating for `/admin` and `/doctor` happens only inside the server actions, not in middleware.** Middleware only checks "is this user signed in at all" — any authenticated user's browser will mount the admin/doctor page shell before the underlying `requireAdmin`/`requireDoctorOrAdmin` calls reject their data fetch. No real data leaks (the reject happens before any Supabase read), but it's a UX/security-hygiene gap worth closing with a proper role check at the route level before launch.
+
+Sign-in/sign-up (`src/app/sign-in`, `src/app/sign-up`) are thin wrappers around Clerk's hosted `<SignIn/>`/`<SignUp/>` components (styling overrides only) — forgot-password and email-verification are handled entirely inside Clerk's own component, no custom app code for either.
+
+### Database
+
+`src/lib/supabase.ts` — real `createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {persistSession: false, autoRefreshToken: false})`, throws at import time if either env var is missing. Includes a `cuid()` helper that is a **simplified custom ID generator** (`c` + base36 timestamp + 8 random chars) — not the real `cuid`/`cuid2` npm package, but sufficient for uniqueness. Tables per CLAUDE.md §4: `users`, `products`, `orders`, `order_items`, `appointments`, `assessment_results` — all confirmed genuinely read/written by the server actions above.
+
+### Payments — simulated, not integrated
+
+`src/app/checkout/page.tsx` creates a real DB order (`createOrder`), then **simulates** the payment step: `setTimeout(() => {...}, 1500)` with an explicit `// Simulated Razorpay payment — replace with real integration later` comment. No `razorpay` package is installed (confirmed absent from `package.json`), no SDK is ever loaded or called. Two additional bugs worth fixing alongside real payment integration:
+- If `createOrder` fails, checkout **still proceeds to the success screen** — the error is only `console.warn`'d, never surfaced to the user or blocking the flow.
+- The success screen displays a **fabricated order ID** (`SM-${Date.now().toString(36)...}`) that has no relationship to the real database order id returned by `createOrder`.
+
+### Cart
+
+`cart-store.ts` (Zustand) has full CRUD (add/remove/updateQuantity/clear) and derived getters, but `cart/page.tsx` only renders a **read-only bundle list** — `removeItem`/`updateQuantity` exist in the store but aren't wired to any UI control. The discount-code input is a **non-functional placeholder** (text field + "Apply" button with no `onClick`). Cart state is **not persisted** — no Zustand `persist` middleware, so it's lost on page refresh.
+
+### Doctor dashboard — mostly a stub
+
+`src/app/doctor/page.tsx` reuses `getAllOrders`/`getUserRole` from `admin.ts` for its order list, which is real. But the actual "doctor" value-add — call status and notes — is **entirely client-side and fake**: `loadCallStatuses`/`saveCallStatuses` read/write a `localStorage` key (`simplymens_doctor_call_status`), never touching Supabase. This means doctor notes are **per-browser, not shared across devices or between doctors**, and vanish if the browser cache is cleared. There is **no prescription-writing feature and no real approval/review workflow** — the "doctor review" step described in the business model (§1, §11) doesn't have a corresponding implemented feature beyond viewing the same order list an admin sees.
+
+### Admin dashboard
+
+Real and the most complete backend-facing surface: stats tiles, searchable/paginated orders table, live order-status dropdown (`updateOrderStatus`), tracking-number input (`updateTrackingNumber`) — all real Supabase writes. Gap: **no UI for managing users, doctors, or products** — role promotion currently requires editing the DB directly or the hardcoded email arrays in `actions/admin.ts`.
+
+### Emails — not implemented at all
+
+Grepped `src/` for `sendEmail|nodemailer|resend|sendgrid|smtp` — zero hits, zero email SDK in `package.json`. Checkout's "We'll send a confirmation email with tracking details shortly" copy is **UI text only** — no email is ever sent, for any event (welcome, assessment confirmation, doctor approval, order confirmation, shipping update, password reset, review request). This is a launch blocker for a real commercial flow, not just a nice-to-have.
+
+### Legal pages, contact info, placeholders
+
+- `/privacy`, `/terms`, `/refund-policy`, `/shipping-policy`, `/medical-disclaimer`, `/help`, `/contact`, `/about` — **none exist**. All are linked from `layout/footer.tsx` and 404 if clicked.
+- 5 program detail pages (`/programs/confidence-recovery`, `/performance-control`, `/testosterone-restore`, `/libido-revival`, `/complete-health`) — **none exist**, same dead-link situation from the footer and Treatment Programs/Program Showcase sections.
+- Footer social icons (Instagram/X/LinkedIn) are all `href="#"` — non-functional placeholders.
+- Footer phone number is still a literal placeholder: `tel:+91XXXXXXXXXX` / displayed `"+91 XXXXX XXXXX"`. Navbar shows a different, fully-formatted number (`+91 800 123 4567` / `tel:+918001234567`) — **unclear which, if either, is a real business number**; this discrepancy was flagged during the 29 July responsive QA pass too and is still unresolved.
+
+### SEO
+
+`layout.tsx` has real, reasonable metadata: title, description, keywords array, OpenGraph title/description/url/siteName/type. Missing: `twitter:` card metadata, and — more importantly — **no `sitemap.ts`/`.xml` and no `robots.ts`/`.txt` anywhere** in `src/app` or `public`. `src/app/favicon.ico` exists (25.9KB, auto-served by Next's App Router convention) — `public/favicon.ico` does not exist but isn't needed given the App Router one is present.
+
+### Accessibility
+
+Sparse: only 16 total `aria-label`/`aria-hidden`/`role=`/`alt=` occurrences across 10 of 31 `.tsx` files. **`checkout`, `cart`, `orders`, `admin`, `doctor`, and `results` pages have zero aria attributes** — these are exactly the transactional/account pages where screen-reader support matters most. Icon-only buttons (admin's tracking "Add" button, doctor call-status toggles, FAQ/accordion chevrons in some places) commonly lack `aria-label`. Footer's social icons are a good counter-example — they do use `aria-label` correctly. Alt text on images is generally present on the homepage sections (audited separately this session) but not universally applied to `<img>` tags in the dashboard/checkout pages.
+
+### Security
+
+- `.env.local` correctly does not exist in the repo (secrets aren't committed) — required keys are documented in §3.
+- `next.config.ts` sets only `images.remotePatterns` — **no security headers at all** (no CSP, `X-Frame-Options`, HSTS, `Referrer-Policy`), no rate limiting on any server action or API route.
+- Clerk webhook signature verification is real (svix), not a stub.
+- Role-based authorization for `/admin` and `/doctor` happens at the server-action layer, not at the middleware/route layer (see Authentication section above) — functionally safe (no data leaks) but not defense-in-depth.
+
+### Analytics
+
+None. Grepped for `gtag|analytics|posthog|mixpanel` — zero hits anywhere in `src/`.

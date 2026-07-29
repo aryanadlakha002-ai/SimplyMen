@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 
 type Program = {
@@ -50,10 +51,15 @@ const programs: Program[] = [
 function ProgramRow({ program, reverse }: { program: Program; reverse: boolean }) {
   const p = program;
   return (
-    <div className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${reverse ? "lg:grid-flow-dense" : ""}`}>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={`grid lg:grid-cols-2 gap-12 lg:gap-20 items-center ${reverse ? "lg:grid-flow-dense" : ""}`}>
       <div className={`lg:self-start lg:mt-20 ${reverse ? "lg:col-start-2" : ""}`}>
         <div className="rounded-3xl overflow-hidden aspect-[4/3]">
-          <img src={p.image} alt={p.headline} className="w-full h-full object-cover" />
+          <img src={p.image} alt={p.headline} loading="lazy" className="w-full h-full object-cover" />
         </div>
       </div>
 
@@ -92,13 +98,13 @@ function ProgramRow({ program, reverse }: { program: Program; reverse: boolean }
           Start Free Assessment
         </Link>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function ProgramShowcase() {
   return (
-    <section className="py-24 lg:py-36 bg-background">
+    <section className="py-24 md:py-28 lg:py-36 bg-background">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-24 lg:space-y-32">
         {programs.map((p, i) => (
           <ProgramRow key={p.slug} program={p} reverse={i % 2 === 1} />

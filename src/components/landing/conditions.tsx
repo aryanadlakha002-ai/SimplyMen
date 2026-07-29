@@ -52,12 +52,13 @@ function ConditionCard({ condition }: { condition: Condition }) {
 
 export default function Conditions() {
   return (
-    <section className="py-24 lg:py-36 bg-surface">
+    <section className="py-24 md:py-28 lg:py-36 bg-surface">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-20"
         >
           <span className="text-xs font-semibold tracking-[0.2em] uppercase text-secondary mb-2 block">
@@ -72,6 +73,7 @@ export default function Conditions() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6"
         >
           {conditionsList.map((c) => (

@@ -6,16 +6,15 @@ import Hero from "@/components/landing/hero";
 import IMABanner from "@/components/landing/ima-banner";
 import HowItWorks from "@/components/landing/how-it-works";
 import Conditions from "@/components/landing/conditions";
-import NotSureCTA from "@/components/home/not-sure-cta";
 import TreatmentPrograms from "@/components/home/treatment-programs";
 import ProgramShowcase from "@/components/home/program-showcase";
 import WhyBetter from "@/components/home/why-better";
-import MeetOurExperts from "@/components/home/meet-our-experts";
-import WhyChooseSimplyMen from "@/components/home/why-choose-simplymen";
-import Testimonials from "@/components/landing/testimonials";
-import WellnessKnowledge from "@/components/landing/wellness-knowledge";
 import RoutineGraph from "@/components/landing/routine-graph";
+import MeetOurExperts from "@/components/home/meet-our-experts";
+import Testimonials from "@/components/landing/testimonials";
+import WhyChooseSimplyMen from "@/components/home/why-choose-simplymen";
 import FAQ from "@/components/landing/faq";
+import WellnessKnowledge from "@/components/landing/wellness-knowledge";
 
 export default function Home() {
   return (
@@ -24,18 +23,17 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <IMABanner />
+        <HowItWorks />
         <Conditions />
-        <NotSureCTA />
         <TreatmentPrograms />
         <ProgramShowcase />
-        <HowItWorks />
         <WhyBetter />
         <RoutineGraph />
         <MeetOurExperts />
-        <WhyChooseSimplyMen />
         <Testimonials />
-        <WellnessKnowledge />
+        <WhyChooseSimplyMen />
         <FAQ />
+        <WellnessKnowledge />
       </main>
       <Footer />
     </>

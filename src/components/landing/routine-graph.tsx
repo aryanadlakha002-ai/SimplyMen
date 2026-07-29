@@ -1,108 +1,141 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Pill, Wallet, Clock, Check, ArrowRight } from "lucide-react";
+import { motion, animate, useInView } from "framer-motion";
+import { Pill, Package, Clock, Check, ArrowDown, ArrowRight } from "lucide-react";
 
-const cards = [
-  {
-    icon: Pill,
-    label: "PRODUCTS USED",
-    oldValue: "Was 12+ Products",
-    newValue: "Now 1 Treatment Program",
-    percent: 83,
-    caption: "Reduction",
-    pillText: "One Personalized Program",
-  },
-  {
-    icon: Wallet,
-    label: "MONTHLY COST",
-    oldValue: "Was ₹4,600",
-    newValue: "Now ₹1,999",
-    percent: 57,
-    caption: "Savings",
-    pillText: "One Simple Price",
-  },
-  {
-    icon: Clock,
-    label: "TIME INVESTED",
-    oldValue: "Was 45 Min/Day",
-    newValue: "Now 5 Min/Day",
-    percent: 89,
-    caption: "Less Time",
-    pillText: "More Time for You",
-  },
-];
+function AnimatedNumber({
+  value,
+  prefix = "",
+  suffix = "",
+}: {
+  value: number;
+  prefix?: string;
+  suffix?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const [display, setDisplay] = useState(0);
 
-const RING_RADIUS = 46;
-const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+  useEffect(() => {
+    if (!inView) return;
+    const controls = animate(0, value, {
+      duration: 1.1,
+      ease: "easeOut",
+      onUpdate: (v) => setDisplay(Math.round(v)),
+    });
+    return () => controls.stop();
+  }, [inView, value]);
 
-function ProgressRing({ percent }: { percent: number }) {
   return (
-    <div className="relative h-[120px] w-[120px]">
-      <svg viewBox="0 0 110 110" className="h-full w-full -rotate-90">
-        <circle
-          cx="55"
-          cy="55"
-          r={RING_RADIUS}
-          fill="none"
-          stroke="var(--surface)"
-          strokeWidth="10"
-        />
-        <motion.circle
-          cx="55"
-          cy="55"
-          r={RING_RADIUS}
-          fill="none"
-          stroke="var(--accent)"
-          strokeWidth="10"
-          strokeLinecap="round"
-          strokeDasharray={RING_CIRCUMFERENCE}
-          initial={{ strokeDashoffset: RING_CIRCUMFERENCE }}
-          whileInView={{ strokeDashoffset: RING_CIRCUMFERENCE * (1 - percent / 100) }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        />
-      </svg>
-      <motion.span
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.9, duration: 0.3 }}
-        className="absolute inset-0 flex items-center justify-center font-display text-2xl text-primary-dark"
-      >
-        {percent}%
-      </motion.span>
+    <span ref={ref}>
+      {prefix}
+      {display.toLocaleString("en-IN")}
+      {suffix}
+    </span>
+  );
+}
+
+function BottleGrid({ muted }: { muted?: boolean }) {
+  return (
+    <div className={`grid grid-cols-4 gap-1.5 p-3 rounded-2xl ${muted ? "bg-surface" : "bg-accent/10"}`}>
+      {Array.from({ length: 12 }).map((_, i) => (
+        <Pill key={i} className="h-3.5 w-3.5 text-muted/60" strokeWidth={1.75} />
+      ))}
     </div>
   );
 }
 
-function RoutineCard({ card, index }: { card: (typeof cards)[number]; index: number }) {
-  const Icon = card.icon;
+function CoinStack({ count }: { count: number }) {
+  return (
+    <div className="flex flex-col items-center justify-end h-[72px]">
+      {Array.from({ length: count }).map((_, i) => (
+        <span
+          key={i}
+          className="h-4 w-14 rounded-full border border-white/40 shadow-sm"
+          style={{
+            background: "linear-gradient(180deg, var(--gold), var(--accent))",
+            marginTop: i === 0 ? 0 : "-10px",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ComparisonColumn({
+  label,
+  divider,
+  traditionalVisual,
+  traditionalCaption,
+  simplymenVisual,
+  simplymenCaption,
+  savingText,
+}: {
+  label: string;
+  divider?: boolean;
+  traditionalVisual: React.ReactNode;
+  traditionalCaption: React.ReactNode;
+  simplymenVisual: React.ReactNode;
+  simplymenCaption: React.ReactNode;
+  savingText: string;
+}) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="flex flex-col items-center text-center rounded-3xl bg-white p-8 shadow-[0_2px_12px_rgba(28,32,36,0.05)] hover:shadow-[0_20px_40px_rgba(28,32,36,0.12)] hover:-translate-y-1.5 transition-all duration-300"
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      className={`flex flex-col items-center text-center px-4 py-2 ${
+        divider ? "md:border-l md:border-border/60" : ""
+      }`}
     >
-      <span className="flex items-center justify-center h-12 w-12 rounded-full bg-surface mb-5">
-        <Icon className="h-5 w-5 text-accent" strokeWidth={1.75} />
+      <span className="text-xs font-semibold tracking-[0.15em] uppercase text-muted mb-6">
+        {label}
       </span>
 
-      <span className="text-xs font-semibold tracking-[0.15em] uppercase text-muted mb-2">
-        {card.label}
-      </span>
-      <span className="text-xs text-muted/70 line-through mb-1">{card.oldValue}</span>
-      <span className="font-display text-xl text-primary-dark mb-6">{card.newValue}</span>
+      {/* Traditional — before */}
+      <motion.div
+        variants={{ rest: { opacity: 1 }, hover: { opacity: 0.55 } }}
+        transition={{ duration: 0.3 }}
+        className="flex flex-col items-center"
+      >
+        <span className="text-[11px] font-medium tracking-wide uppercase text-muted/70 mb-3">
+          Traditional
+        </span>
+        <div className="h-[72px] flex items-center justify-center">{traditionalVisual}</div>
+        <span className="mt-3 text-sm text-muted/80 line-through decoration-muted/50">
+          {traditionalCaption}
+        </span>
+      </motion.div>
 
-      <ProgressRing percent={card.percent} />
-      <span className="text-xs font-medium text-muted mt-2 mb-6">{card.caption}</span>
+      {/* Transition arrow */}
+      <motion.div
+        variants={{ rest: { y: 0 }, hover: { y: 5 } }}
+        transition={{ duration: 0.4, repeat: 1, repeatType: "reverse" }}
+        className="my-5 flex items-center justify-center h-9 w-9 rounded-full bg-surface shrink-0"
+      >
+        <ArrowDown className="h-4 w-4 text-accent" strokeWidth={2} />
+      </motion.div>
 
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-success/10 text-success px-4 py-2 text-xs font-semibold">
+      {/* SimplyMen — after */}
+      <motion.div
+        variants={{ rest: { y: 0 }, hover: { y: -6 } }}
+        transition={{ duration: 0.3 }}
+        className="flex flex-col items-center"
+      >
+        <span className="text-[11px] font-semibold tracking-wide uppercase text-accent mb-3">
+          SimplyMen
+        </span>
+        <div className="h-[72px] flex items-center justify-center">{simplymenVisual}</div>
+        <span className="mt-3 font-display text-xl text-primary-dark">
+          {simplymenCaption}
+        </span>
+      </motion.div>
+
+      <span className="mt-6 inline-flex items-center gap-1.5 rounded-full bg-success/10 text-success px-4 py-2 text-xs font-semibold">
         <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
-        {card.pillText}
+        {savingText}
       </span>
     </motion.div>
   );
@@ -135,11 +168,11 @@ export default function RoutineGraph() {
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="relative py-24 lg:py-32"
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="relative py-24 md:py-28 lg:py-36"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -150,27 +183,86 @@ export default function RoutineGraph() {
               Simplify Your Health Routine
             </h2>
             <p className="mt-4 text-lg text-muted">
-              Personalized treatment that fits your life.
+              Everything you need, without the complexity of traditional treatment.
             </p>
-          </div>
-
-          <div className="-mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {cards.map((card, i) => (
-              <RoutineCard key={card.label} card={card} index={i} />
-            ))}
           </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+            className="rounded-3xl bg-white p-8 sm:p-10 lg:p-14 shadow-[0_2px_12px_rgba(28,32,36,0.05)] hover:shadow-[0_20px_40px_rgba(28,32,36,0.12)] transition-shadow duration-300"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 md:gap-x-6 lg:gap-x-10">
+              <ComparisonColumn
+                label="Products Used"
+                traditionalVisual={<BottleGrid muted />}
+                traditionalCaption={
+                  <>
+                    <AnimatedNumber value={12} /> individual products
+                  </>
+                }
+                simplymenVisual={
+                  <span className="flex items-center justify-center h-16 w-16 rounded-2xl bg-accent/10">
+                    <Package className="h-8 w-8 text-accent" strokeWidth={1.75} />
+                  </span>
+                }
+                simplymenCaption={
+                  <>
+                    <AnimatedNumber value={1} /> treatment program
+                  </>
+                }
+                savingText="11 fewer products"
+              />
+              <ComparisonColumn
+                divider
+                label="Monthly Cost"
+                traditionalVisual={<CoinStack count={6} />}
+                traditionalCaption={
+                  <>
+                    &#8377;<AnimatedNumber value={4600} /> /month
+                  </>
+                }
+                simplymenVisual={<CoinStack count={2} />}
+                simplymenCaption={
+                  <>
+                    &#8377;<AnimatedNumber value={1999} /> /month
+                  </>
+                }
+                savingText="Save ₹2,601 every month"
+              />
+              <ComparisonColumn
+                divider
+                label="Time Per Day"
+                traditionalVisual={<Clock className="h-16 w-16 text-muted/60" strokeWidth={1.25} />}
+                traditionalCaption={
+                  <>
+                    <AnimatedNumber value={45} /> min/day
+                  </>
+                }
+                simplymenVisual={<Clock className="h-8 w-8 text-accent" strokeWidth={1.75} />}
+                simplymenCaption={
+                  <>
+                    <AnimatedNumber value={5} /> min/day
+                  </>
+                }
+                savingText="Get 40 minutes back every day"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
             className="mt-10 rounded-3xl bg-primary-dark shadow-lg px-6 sm:px-10 py-6 flex flex-col sm:flex-row items-center justify-between gap-5"
           >
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-accent shrink-0" />
               <p className="text-sm sm:text-base text-white">
-                Join <span className="text-accent font-semibold">50,000+</span> men who simplified their health routine
+                Join <span className="text-accent font-semibold">50,000+</span> men who&apos;ve simplified their treatment with SimplyMen
               </p>
             </div>
             <Link

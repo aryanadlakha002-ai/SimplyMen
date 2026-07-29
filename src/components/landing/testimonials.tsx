@@ -43,12 +43,13 @@ const stats = [
 
 export default function Testimonials() {
   return (
-    <section className="py-24 lg:py-36 bg-primary-dark overflow-hidden">
+    <section className="py-24 md:py-28 lg:py-36 bg-primary-dark overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center mb-16"
         >
           <span className="text-xs font-semibold tracking-[0.2em] uppercase text-accent mb-4 block">
@@ -64,6 +65,7 @@ export default function Testimonials() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
         >
           {stats.map((s) => (
@@ -84,7 +86,7 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.1 }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
               className="rounded-2xl bg-white/[0.06] border border-white/[0.08] p-6 hover:bg-white/[0.09] transition-colors"
             >
               <div className="flex items-center gap-0.5 mb-4">
